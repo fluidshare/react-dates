@@ -456,6 +456,7 @@ class DateRangePicker extends React.PureComponent {
       small,
       disabled,
       theme: { reactDates },
+      CustomPickerInput
     } = this.props;
 
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
@@ -477,6 +478,7 @@ class DateRangePicker extends React.PureComponent {
 
     /* eslint-disable jsx-a11y/no-static-element-interactions */
     /* eslint-disable jsx-a11y/click-events-have-key-events */
+
     return (
       <div
         ref={this.setDayPickerContainerRef}
@@ -486,10 +488,10 @@ class DateRangePicker extends React.PureComponent {
           anchorDirection === ANCHOR_RIGHT && styles.DateRangePicker_picker__directionRight,
           orientation === HORIZONTAL_ORIENTATION && styles.DateRangePicker_picker__horizontal,
           orientation === VERTICAL_ORIENTATION && styles.DateRangePicker_picker__vertical,
-          !withAnyPortal && openDirection === OPEN_DOWN && {
+          !withAnyPortal && openDirection && !CustomPickerInput === OPEN_DOWN && {
             top: inputHeight + verticalSpacing,
           },
-          !withAnyPortal && openDirection === OPEN_UP && {
+          !withAnyPortal && openDirection === OPEN_UP && !CustomPickerInput && {
             bottom: inputHeight + verticalSpacing,
           },
           withAnyPortal && styles.DateRangePicker_picker__portal,
