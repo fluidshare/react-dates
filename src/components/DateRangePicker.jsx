@@ -610,6 +610,7 @@ class DateRangePicker extends React.PureComponent {
       small,
       regular,
       styles,
+      CustomPickerInput,
     } = this.props;
 
     const { isDateRangePickerInputFocused } = this.state;
@@ -664,6 +665,7 @@ class DateRangePicker extends React.PureComponent {
         small={small}
         regular={regular}
         verticalSpacing={verticalSpacing}
+        CustomPickerInput={CustomPickerInput}
       >
         {this.maybeRenderDayPickerWithPortal()}
       </DateRangePickerInputController>

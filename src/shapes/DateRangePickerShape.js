@@ -54,8 +54,16 @@ export default {
   keepFocusOnInput: PropTypes.bool,
 
   // calendar presentation and interaction related props
-  renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
-  renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderMonthText: mutuallyExclusiveProps(
+    PropTypes.func,
+    'renderMonthText',
+    'renderMonthElement',
+  ),
+  renderMonthElement: mutuallyExclusiveProps(
+    PropTypes.func,
+    'renderMonthText',
+    'renderMonthElement',
+  ),
   renderWeekHeaderElement: PropTypes.func,
   orientation: OrientationShape,
   anchorDirection: anchorDirectionShape,
@@ -107,4 +115,5 @@ export default {
   weekDayFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerPhrases)),
   dayAriaLabelFormat: PropTypes.string,
+  CustomPickerInput: PropTypes.func,
 };
