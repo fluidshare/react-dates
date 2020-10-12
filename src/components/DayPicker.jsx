@@ -197,6 +197,8 @@ export const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
+const SINGLE_LETTER_HEADER = 'single';
+
 class DayPicker extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -653,8 +655,14 @@ class DayPicker extends React.PureComponent {
     const firstDayOfWeek = this.getFirstDayOfWeek();
 
     const weekHeaders = [];
+    const isSingleLetter = weekDayFormat === SINGLE_LETTER_HEADER;
+    const format = isSingleLetter ? 'dd' : weekDayFormat;
     for (let i = 0; i < 7; i += 1) {
-      weekHeaders.push(currentMonth.clone().day((i + firstDayOfWeek) % 7).format(weekDayFormat));
+      let headerString = currentMonth.clone().day((i + firstDayOfWeek) % 7).format(format);
+      if (isSingleLetter) {
+        headerString = headerString.slice(0, 1).toUpperCase();
+      }
+      weekHeaders.push(headerString);
     }
 
     return weekHeaders;
