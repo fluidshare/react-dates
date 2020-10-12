@@ -197,7 +197,7 @@ export const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-const SINGLE_LETTER_HEADER = 'sngl'
+const SINGLE_LETTER_HEADER = 'single';
 
 class DayPicker extends React.PureComponent {
   constructor(props) {
