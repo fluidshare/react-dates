@@ -357,6 +357,7 @@ class DateRangePicker extends React.PureComponent {
 
     const isAnchoredLeft = anchorDirection === ANCHOR_LEFT;
     if (!withPortal && !withFullScreenPortal) {
+      console.log('boom???');
       const containerRect = this.dayPickerContainer.getBoundingClientRect();
       const currentOffset = dayPickerContainerStyles[anchorDirection] || 0;
       const containerEdge = isAnchoredLeft
