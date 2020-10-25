@@ -131,6 +131,7 @@ const defaultProps = {
   weekDayFormat: 'dd',
   phrases: DateRangePickerPhrases,
   dayAriaLabelFormat: undefined,
+  renderTitle: undefined,
 };
 
 class DateRangePicker extends React.PureComponent {
@@ -357,7 +358,6 @@ class DateRangePicker extends React.PureComponent {
 
     const isAnchoredLeft = anchorDirection === ANCHOR_LEFT;
     if (!withPortal && !withFullScreenPortal) {
-      console.log('boom???');
       const containerRect = this.dayPickerContainer.getBoundingClientRect();
       const currentOffset = dayPickerContainerStyles[anchorDirection] || 0;
       const containerEdge = isAnchoredLeft
@@ -457,6 +457,7 @@ class DateRangePicker extends React.PureComponent {
       disabled,
       theme: { reactDates },
       CustomPickerInput,
+      renderTitle,
     } = this.props;
 
     const {
@@ -511,6 +512,7 @@ class DateRangePicker extends React.PureComponent {
           dayPickerContainerStyles
         )}
         onClick={onOutsideClick}>
+        {renderTitle && renderTitle()}
         <DayPickerRangeController
           orientation={orientation}
           enableOutsideDays={enableOutsideDays}
@@ -563,7 +565,6 @@ class DateRangePicker extends React.PureComponent {
           disabled={disabled}
           horizontalMonthPadding={horizontalMonthPadding}
         />
-
         {withFullScreenPortal && (
           <button
             {...css(styles.DateRangePicker_closeButton)}

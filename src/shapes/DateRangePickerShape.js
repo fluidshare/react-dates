@@ -57,12 +57,12 @@ export default {
   renderMonthText: mutuallyExclusiveProps(
     PropTypes.func,
     'renderMonthText',
-    'renderMonthElement',
+    'renderMonthElement'
   ),
   renderMonthElement: mutuallyExclusiveProps(
     PropTypes.func,
     'renderMonthText',
-    'renderMonthElement',
+    'renderMonthElement'
   ),
   renderWeekHeaderElement: PropTypes.func,
   orientation: OrientationShape,
@@ -116,4 +116,5 @@ export default {
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerPhrases)),
   dayAriaLabelFormat: PropTypes.string,
   CustomPickerInput: PropTypes.func,
+  renderTitle: PropTypes.func,
 };
