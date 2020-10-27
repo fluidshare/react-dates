@@ -1084,9 +1084,11 @@ class DayPicker extends React.PureComponent {
     }
 
     const weekHeaders = this.getWeekHeaders();
-    const header = weekHeaders.map(day => (
+    // eslint-disable-next-line
+    const header = weekHeaders.map((day, index) => (
       <li
-        key={day}
+        // eslint-disable-next-line
+        key={`${day}-${index}`}
         {...css(styles.DayPicker_weekHeader_li, { width: daySize })}>
         {renderWeekHeaderElement ? (
           renderWeekHeaderElement(day)

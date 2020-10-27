@@ -458,6 +458,7 @@ class DateRangePicker extends React.PureComponent {
       theme: { reactDates },
       CustomPickerInput,
       renderTitle,
+      noBorder,
     } = this.props;
 
     const {
@@ -540,6 +541,7 @@ class DateRangePicker extends React.PureComponent {
           navPosition={navPosition}
           navPrev={navPrev}
           navNext={navNext}
+          noBorder={noBorder}
           renderNavPrevButton={renderNavPrevButton}
           renderNavNextButton={renderNavNextButton}
           minimumNights={minimumNights}

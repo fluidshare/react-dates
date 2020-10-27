@@ -123,7 +123,7 @@ const defaultProps = {
   reopenPickerOnClearDates: false,
   withFullScreenPortal: false,
   minimumNights: 1,
-  isOutsideRange: (day) => !isInclusivelyAfterDay(day, moment()),
+  isOutsideRange: day => !isInclusivelyAfterDay(day, moment()),
   isDayBlocked: () => false,
   displayFormat: () => moment.localeData().longDateFormat('L'),
 
@@ -160,9 +160,7 @@ export default class DateRangePickerInputController extends React.PureComponent 
   }
 
   onClearFocus() {
-    const {
-      onFocusChange, onClose, startDate, endDate,
-    } = this.props;
+    const { onFocusChange, onClose, startDate, endDate } = this.props;
 
     onFocusChange(null);
     onClose({ startDate, endDate });
@@ -180,9 +178,14 @@ export default class DateRangePickerInputController extends React.PureComponent 
 
     const endDate = toMomentObject(endDateString, this.getDisplayFormat());
 
-    const isEndDateValid = endDate && !isOutsideRange(endDate) && !isDayBlocked(endDate) && !(
-      startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'))
-    );
+    const isEndDateValid =
+      endDate &&
+      !isOutsideRange(endDate) &&
+      !isDayBlocked(endDate) &&
+      !(
+        startDate &&
+        isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'))
+      );
     if (isEndDateValid) {
       onDatesChange({ startDate, endDate });
       if (!keepOpenOnDateSelect) this.onClearFocus();
@@ -203,7 +206,9 @@ export default class DateRangePickerInputController extends React.PureComponent 
     } = this.props;
 
     if (
-      !startDate && withFullScreenPortal && (!disabled || disabled === END_DATE)
+      !startDate &&
+      withFullScreenPortal &&
+      (!disabled || disabled === END_DATE)
     ) {
       // When the datepicker is full screen, we never want to focus the end date first
       // because there's no indication that that is the case once the datepicker is open and it
@@ -226,11 +231,14 @@ export default class DateRangePickerInputController extends React.PureComponent 
     } = this.props;
 
     const startDate = toMomentObject(startDateString, this.getDisplayFormat());
-    const isEndDateBeforeStartDate = startDate && isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'));
-    const isStartDateValid = startDate
-      && !isOutsideRange(startDate)
-      && !isDayBlocked(startDate)
-      && !(disabled === END_DATE && isEndDateBeforeStartDate);
+    const isEndDateBeforeStartDate =
+      startDate &&
+      isBeforeDay(endDate, startDate.clone().add(minimumNights, 'days'));
+    const isStartDateValid =
+      startDate &&
+      !isOutsideRange(startDate) &&
+      !isDayBlocked(startDate) &&
+      !(disabled === END_DATE && isEndDateBeforeStartDate);
 
     if (isStartDateValid) {
       if (isEndDateBeforeStartDate) {
@@ -365,12 +373,14 @@ export default class DateRangePickerInputController extends React.PureComponent 
       regular,
       verticalSpacing,
     };
+    console.log('suhbruh-a');
     if (CustomPickerInput !== undefined) {
+      console.log('suhbruh-b');
       return (
         <CustomPickerInput {...pickerInputProps}>{children}</CustomPickerInput>
       );
     }
-
+    console.log('suhbruh-c');
     return (
       <DateRangePickerInput {...pickerInputProps}>
         {children}
