@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import { Portal } from 'react-portal';
 import { forbidExtraProps } from 'airbnb-prop-types';
 import { addEventListener } from 'consolidated-events';
 import isTouchDevice from 'is-touch-device';
@@ -466,7 +465,8 @@ class DateRangePicker extends React.PureComponent {
     } = this.state;
 
     const onOutsideClick = !withFullScreenPortal && withPortal ? this.onOutsideClick : undefined;
-    const initialVisibleMonthThunk = initialVisibleMonth || (() => startDate || endDate || moment());
+    const initialVisibleMonthThunk = initialVisibleMonth
+      || (() => startDate || endDate || moment());
 
     const closeIcon = customCloseIcon || (
       <CloseButton {...css(styles.DateRangePicker_closeButton_svg)} />

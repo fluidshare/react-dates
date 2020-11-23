@@ -447,7 +447,8 @@ class DayPicker extends React.PureComponent {
       && currentMonthScrollTop
       && this.transitionContainer
     ) {
-      this.transitionContainer.scrollTop = this.transitionContainer.scrollHeight - currentMonthScrollTop;
+      this.transitionContainer.scrollTop = this.transitionContainer.scrollHeight
+        - currentMonthScrollTop;
     }
   }
 
@@ -1212,10 +1213,12 @@ class DayPicker extends React.PureComponent {
       </div>
     );
 
-    const calendarInfoPanelWidth = renderCalendarInfo && calendarInfoIsInline ? calendarInfoWidth : 0;
+    const calendarInfoPanelWidth = renderCalendarInfo
+      && calendarInfoIsInline ? calendarInfoWidth : 0;
 
     const firstVisibleMonthIndex = this.getFirstVisibleIndex();
-    const wrapperHorizontalWidth = calendarMonthWidth * numberOfMonths + 2 * dayPickerHorizontalPadding;
+    const wrapperHorizontalWidth = calendarMonthWidth
+      * numberOfMonths + 2 * dayPickerHorizontalPadding;
     // Adding `1px` because of whitespace between 2 inline-block
     const fullHorizontalWidth = wrapperHorizontalWidth + calendarInfoPanelWidth + 1;
 

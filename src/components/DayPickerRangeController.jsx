@@ -343,7 +343,8 @@ export default class DayPickerRangeController extends React.PureComponent {
       recomputeDayHighlighted = true;
     }
 
-    const recomputePropModifiers = recomputeOutsideRange || recomputeDayBlocked || recomputeDayHighlighted;
+    const recomputePropModifiers = recomputeOutsideRange
+      || recomputeDayBlocked || recomputeDayHighlighted;
 
     const didStartDateChange = startDate !== prevStartDate;
     const didEndDateChange = endDate !== prevEndDate;
@@ -1339,7 +1340,8 @@ export default class DayPickerRangeController extends React.PureComponent {
       orientation,
       startDate,
     } = nextProps;
-    const initialVisibleMonthThunk = initialVisibleMonth || (startDate ? () => startDate : () => this.today);
+    const initialVisibleMonthThunk = initialVisibleMonth
+      || (startDate ? () => startDate : () => this.today);
     const currentMonth = initialVisibleMonthThunk();
     const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
     const visibleDays = this.getModifiers(
