@@ -107,12 +107,12 @@ const propTypes = forbidExtraProps({
   renderMonthText: mutuallyExclusiveProps(
     PropTypes.func,
     'renderMonthText',
-    'renderMonthElement'
+    'renderMonthElement',
   ),
   renderMonthElement: mutuallyExclusiveProps(
     PropTypes.func,
     'renderMonthText',
-    'renderMonthElement'
+    'renderMonthElement',
   ),
   renderWeekHeaderElement: PropTypes.func,
 
@@ -224,10 +224,9 @@ class DayPicker extends React.PureComponent {
 
     const { horizontalMonthPadding } = props;
 
-    const translationValue =
-      props.isRTL && this.isHorizontal()
-        ? -getCalendarMonthWidth(props.daySize, horizontalMonthPadding)
-        : 0;
+    const translationValue = props.isRTL && this.isHorizontal()
+      ? -getCalendarMonthWidth(props.daySize, horizontalMonthPadding)
+      : 0;
 
     this.hasSetInitialVisibleMonth = !props.hidden;
     this.state = {
@@ -238,7 +237,7 @@ class DayPicker extends React.PureComponent {
       scrollableMonthMultiple: 1,
       calendarMonthWidth: getCalendarMonthWidth(
         props.daySize,
-        horizontalMonthPadding
+        horizontalMonthPadding,
       ),
       focusedDate: !props.hidden || props.isFocused ? focusedDate : null,
       nextFocusedDate: null,
@@ -271,14 +270,14 @@ class DayPicker extends React.PureComponent {
     this.getNextScrollableMonths = this.getNextScrollableMonths.bind(this);
     this.getPrevScrollableMonths = this.getPrevScrollableMonths.bind(this);
     this.updateStateAfterMonthTransition = this.updateStateAfterMonthTransition.bind(
-      this
+      this,
     );
 
     this.openKeyboardShortcutsPanel = this.openKeyboardShortcutsPanel.bind(
-      this
+      this,
     );
     this.closeKeyboardShortcutsPanel = this.closeKeyboardShortcutsPanel.bind(
-      this
+      this,
     );
 
     this.setCalendarInfoRef = this.setCalendarInfoRef.bind(this);
@@ -294,11 +293,10 @@ class DayPicker extends React.PureComponent {
     const calendarInfoWidth = this.calendarInfo
       ? calculateDimension(this.calendarInfo, 'width', true, true)
       : 0;
-    const currentMonthScrollTop =
-      this.transitionContainer && orientation === VERTICAL_SCROLLABLE
-        ? this.transitionContainer.scrollHeight -
-          this.transitionContainer.scrollTop
-        : null;
+    const currentMonthScrollTop = this.transitionContainer && orientation === VERTICAL_SCROLLABLE
+      ? this.transitionContainer.scrollHeight
+          - this.transitionContainer.scrollTop
+      : null;
 
     this.setState({
       isTouchDevice: isTouchDevice(),
@@ -341,7 +339,7 @@ class DayPicker extends React.PureComponent {
       this.setState({
         calendarMonthWidth: getCalendarMonthWidth(
           nextProps.daySize,
-          horizontalMonthPadding
+          horizontalMonthPadding,
         ),
       });
     }
@@ -377,14 +375,14 @@ class DayPicker extends React.PureComponent {
     // we can adjust scroll after the component has updated and the previous current month
     // stays in view.
     if (
-      orientation === VERTICAL_SCROLLABLE &&
-      this.transitionContainer &&
-      !isSameMonth(currentMonth, nextCurrentMonth)
+      orientation === VERTICAL_SCROLLABLE
+      && this.transitionContainer
+      && !isSameMonth(currentMonth, nextCurrentMonth)
     ) {
       this.setState({
         currentMonthScrollTop:
-          this.transitionContainer.scrollHeight -
-          this.transitionContainer.scrollTop,
+          this.transitionContainer.scrollHeight
+          - this.transitionContainer.scrollTop,
       });
     }
   }
@@ -402,7 +400,7 @@ class DayPicker extends React.PureComponent {
           this.calendarInfo,
           'width',
           true,
-          true
+          true,
         );
         if (calendarInfoWidth !== calendarInfoPanelWidth) {
           this.setState({
@@ -414,7 +412,9 @@ class DayPicker extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { orientation, daySize, isFocused, numberOfMonths } = this.props;
+    const {
+      orientation, daySize, isFocused, numberOfMonths,
+    } = this.props;
     const {
       currentMonth,
       currentMonthScrollTop,
@@ -423,15 +423,14 @@ class DayPicker extends React.PureComponent {
     } = this.state;
 
     if (
-      this.isHorizontal() &&
-      (orientation !== prevProps.orientation || daySize !== prevProps.daySize)
+      this.isHorizontal()
+      && (orientation !== prevProps.orientation || daySize !== prevProps.daySize)
     ) {
       const visibleCalendarWeeks = this.calendarMonthWeeks.slice(
         1,
-        numberOfMonths + 1
+        numberOfMonths + 1,
       );
-      const calendarMonthWeeksHeight =
-        Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
+      const calendarMonthWeeksHeight = Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
       const newMonthHeight = monthTitleHeight + calendarMonthWeeksHeight + 1;
       this.adjustDayPickerHeight(newMonthHeight);
     }
@@ -443,13 +442,12 @@ class DayPicker extends React.PureComponent {
     // If orientation is VERTICAL_SCROLLABLE and currentMonth has changed adjust scrollTop so the
     // new months rendered above the current month don't push the current month out of view.
     if (
-      orientation === VERTICAL_SCROLLABLE &&
-      !isSameMonth(prevState.currentMonth, currentMonth) &&
-      currentMonthScrollTop &&
-      this.transitionContainer
+      orientation === VERTICAL_SCROLLABLE
+      && !isSameMonth(prevState.currentMonth, currentMonth)
+      && currentMonthScrollTop
+      && this.transitionContainer
     ) {
-      this.transitionContainer.scrollTop =
-        this.transitionContainer.scrollHeight - currentMonthScrollTop;
+      this.transitionContainer.scrollTop = this.transitionContainer.scrollHeight - currentMonthScrollTop;
     }
   }
 
@@ -469,7 +467,9 @@ class DayPicker extends React.PureComponent {
   onFinalKeyDown(e) {
     this.setState({ withMouseInteractions: false });
 
-    const { onBlur, onTab, onShiftTab, isRTL } = this.props;
+    const {
+      onBlur, onTab, onShiftTab, isRTL,
+    } = this.props;
     const { focusedDate, showKeyboardShortcuts } = this.state;
     if (!focusedDate) return;
 
@@ -580,8 +580,7 @@ class DayPicker extends React.PureComponent {
 
     let translationValue;
     if (this.isVertical()) {
-      const calendarMonthWeeksHeight =
-        this.calendarMonthWeeks[0] * (daySize - 1);
+      const calendarMonthWeeksHeight = this.calendarMonthWeeks[0] * (daySize - 1);
       translationValue = monthTitleHeight + calendarMonthWeeksHeight + 1;
     } else if (this.isHorizontal()) {
       translationValue = calendarMonthWidth;
@@ -591,10 +590,9 @@ class DayPicker extends React.PureComponent {
 
       const visibleCalendarWeeks = this.calendarMonthWeeks.slice(
         0,
-        numberOfMonths
+        numberOfMonths,
       );
-      const calendarMonthWeeksHeight =
-        Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
+      const calendarMonthWeeksHeight = Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
       const newMonthHeight = monthTitleHeight + calendarMonthWeeksHeight + 1;
       this.adjustDayPickerHeight(newMonthHeight);
     }
@@ -662,10 +660,9 @@ class DayPicker extends React.PureComponent {
 
       const visibleCalendarWeeks = this.calendarMonthWeeks.slice(
         2,
-        numberOfMonths + 2
+        numberOfMonths + 2,
       );
-      const calendarMonthWeeksHeight =
-        Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
+      const calendarMonthWeeksHeight = Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
       const newMonthHeight = monthTitleHeight + calendarMonthWeeksHeight + 1;
       this.adjustDayPickerHeight(newMonthHeight);
     }
@@ -734,8 +731,8 @@ class DayPicker extends React.PureComponent {
     }
 
     if (
-      newMonth &&
-      (!focusedDate || !isDayVisible(focusedDate, newMonth, numberOfMonths))
+      newMonth
+      && (!focusedDate || !isDayVisible(focusedDate, newMonth, numberOfMonths))
     ) {
       focusedDate = newMonth.clone().startOf('month');
     }
@@ -750,7 +747,7 @@ class DayPicker extends React.PureComponent {
       },
       () => {
         this.calculateAndSetDayPickerHeight();
-      }
+      },
     );
   }
 
@@ -763,7 +760,7 @@ class DayPicker extends React.PureComponent {
     for (let i = 0; i < numberOfMonths + 2; i += 1) {
       const numberOfWeeks = getNumberOfCalendarMonthWeeks(
         month,
-        firstDayOfWeek
+        firstDayOfWeek,
       );
       this.calendarMonthWeeks.push(numberOfWeeks);
       month = month.add(1, 'months');
@@ -814,7 +811,7 @@ class DayPicker extends React.PureComponent {
     const isNewFocusedDateVisible = isDayVisible(
       newFocusedDate,
       currentMonth,
-      numberOfMonths
+      numberOfMonths,
     );
     if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
       this.onNextMonthTransition(newFocusedDate);
@@ -833,7 +830,7 @@ class DayPicker extends React.PureComponent {
     const isNewFocusedDateVisible = isDayVisible(
       newFocusedDate,
       currentMonth,
-      numberOfMonths
+      numberOfMonths,
     );
     if (newFocusedDateMonth !== focusedDateMonth && !isNewFocusedDateVisible) {
       this.onPrevMonthTransition(newFocusedDate);
@@ -851,8 +848,8 @@ class DayPicker extends React.PureComponent {
   isVertical() {
     const { orientation } = this.props;
     return (
-      orientation === VERTICAL_ORIENTATION ||
-      orientation === VERTICAL_SCROLLABLE
+      orientation === VERTICAL_ORIENTATION
+      || orientation === VERTICAL_SCROLLABLE
     );
   }
 
@@ -885,7 +882,7 @@ class DayPicker extends React.PureComponent {
       const newInvisibleMonth = newMonth.clone().subtract(1, 'month');
       const numberOfWeeks = getNumberOfCalendarMonthWeeks(
         newInvisibleMonth,
-        firstDayOfWeek
+        firstDayOfWeek,
       );
       this.calendarMonthWeeks = [
         numberOfWeeks,
@@ -897,7 +894,7 @@ class DayPicker extends React.PureComponent {
       const newInvisibleMonth = newMonth.clone().add(numberOfMonths, 'month');
       const numberOfWeeks = getNumberOfCalendarMonthWeeks(
         newInvisibleMonth,
-        firstDayOfWeek
+        firstDayOfWeek,
       );
       this.calendarMonthWeeks = [
         ...this.calendarMonthWeeks.slice(1),
@@ -931,15 +928,15 @@ class DayPicker extends React.PureComponent {
         if (withMouseInteractions) {
           const activeElement = getActiveElement();
           if (
-            activeElement &&
-            activeElement !== document.body &&
-            this.container.contains(activeElement) &&
-            activeElement.blur
+            activeElement
+            && activeElement !== document.body
+            && this.container.contains(activeElement)
+            && activeElement.blur
           ) {
             activeElement.blur();
           }
         }
-      }
+      },
     );
   }
 
@@ -962,10 +959,9 @@ class DayPicker extends React.PureComponent {
 
     const visibleCalendarWeeks = this.calendarMonthWeeks.slice(
       1,
-      numberOfMonths + 1
+      numberOfMonths + 1,
     );
-    const calendarMonthWeeksHeight =
-      Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
+    const calendarMonthWeeksHeight = Math.max(0, ...visibleCalendarWeeks) * (daySize - 1);
     const newMonthHeight = monthTitleHeight + calendarMonthWeeksHeight + 1;
 
     if (this.isHorizontal()) {
@@ -1015,15 +1011,13 @@ class DayPicker extends React.PureComponent {
       return null;
     }
 
-    const onPrevMonthClick =
-      orientation === VERTICAL_SCROLLABLE
-        ? this.getPrevScrollableMonths
-        : this.onPrevMonthClick;
+    const onPrevMonthClick = orientation === VERTICAL_SCROLLABLE
+      ? this.getPrevScrollableMonths
+      : this.onPrevMonthClick;
 
-    const onNextMonthClick =
-      orientation === VERTICAL_SCROLLABLE
-        ? this.getNextScrollableMonths
-        : this.onNextMonthClick;
+    const onNextMonthClick = orientation === VERTICAL_SCROLLABLE
+      ? this.getNextScrollableMonths
+      : this.onNextMonthClick;
 
     return (
       <DayPickerNavigation
@@ -1042,14 +1036,14 @@ class DayPicker extends React.PureComponent {
         isRTL={isRTL}
         showNavNextButton={
           !(
-            noNavNextButton ||
-            (orientation === VERTICAL_SCROLLABLE && navDirection === PREV_NAV)
+            noNavNextButton
+            || (orientation === VERTICAL_SCROLLABLE && navDirection === PREV_NAV)
           )
         }
         showNavPrevButton={
           !(
-            noNavPrevButton ||
-            (orientation === VERTICAL_SCROLLABLE && navDirection === NEXT_NAV)
+            noNavPrevButton
+            || (orientation === VERTICAL_SCROLLABLE && navDirection === NEXT_NAV)
           )
         }
       />
@@ -1089,7 +1083,8 @@ class DayPicker extends React.PureComponent {
       <li
         // eslint-disable-next-line
         key={`${day}-${index}`}
-        {...css(styles.DayPicker_weekHeader_li, { width: daySize })}>
+        {...css(styles.DayPicker_weekHeader_li, { width: daySize })}
+      >
         {renderWeekHeaderElement ? (
           renderWeekHeaderElement(day)
         ) : (
@@ -1105,9 +1100,10 @@ class DayPicker extends React.PureComponent {
           this.isVertical() && styles.DayPicker_weekHeader__vertical,
           verticalScrollable && styles.DayPicker_weekHeader__verticalScrollable,
           weekHeaderStyle,
-          { padding: `0 ${horizontalMonthPadding}px` }
+          { padding: `0 ${horizontalMonthPadding}px` },
         )}
-        key={`week-${index}`}>
+        key={`week-${index}`}
+      >
         <ul {...css(styles.DayPicker_weekHeader_ul)}>{header}</ul>
       </div>
     );
@@ -1200,34 +1196,28 @@ class DayPicker extends React.PureComponent {
     const shouldAnimateHeight = isHorizontal && hasSetHeight;
 
     const calendarInfoPositionTop = calendarInfoPosition === INFO_POSITION_TOP;
-    const calendarInfoPositionBottom =
-      calendarInfoPosition === INFO_POSITION_BOTTOM;
-    const calendarInfoPositionBefore =
-      calendarInfoPosition === INFO_POSITION_BEFORE;
-    const calendarInfoPositionAfter =
-      calendarInfoPosition === INFO_POSITION_AFTER;
-    const calendarInfoIsInline =
-      calendarInfoPositionBefore || calendarInfoPositionAfter;
+    const calendarInfoPositionBottom = calendarInfoPosition === INFO_POSITION_BOTTOM;
+    const calendarInfoPositionBefore = calendarInfoPosition === INFO_POSITION_BEFORE;
+    const calendarInfoPositionAfter = calendarInfoPosition === INFO_POSITION_AFTER;
+    const calendarInfoIsInline = calendarInfoPositionBefore || calendarInfoPositionAfter;
 
     const calendarInfo = renderCalendarInfo && (
       <div
         ref={this.setCalendarInfoRef}
         {...css(
-          calendarInfoIsInline && styles.DayPicker_calendarInfo__horizontal
-        )}>
+          calendarInfoIsInline && styles.DayPicker_calendarInfo__horizontal,
+        )}
+      >
         {renderCalendarInfo()}
       </div>
     );
 
-    const calendarInfoPanelWidth =
-      renderCalendarInfo && calendarInfoIsInline ? calendarInfoWidth : 0;
+    const calendarInfoPanelWidth = renderCalendarInfo && calendarInfoIsInline ? calendarInfoWidth : 0;
 
     const firstVisibleMonthIndex = this.getFirstVisibleIndex();
-    const wrapperHorizontalWidth =
-      calendarMonthWidth * numberOfMonths + 2 * dayPickerHorizontalPadding;
+    const wrapperHorizontalWidth = calendarMonthWidth * numberOfMonths + 2 * dayPickerHorizontalPadding;
     // Adding `1px` because of whitespace between 2 inline-block
-    const fullHorizontalWidth =
-      wrapperHorizontalWidth + calendarInfoPanelWidth + 1;
+    const fullHorizontalWidth = wrapperHorizontalWidth + calendarInfoPanelWidth + 1;
 
     const transitionContainerStyle = {
       width: isHorizontal && wrapperHorizontalWidth,
@@ -1256,33 +1246,36 @@ class DayPicker extends React.PureComponent {
           this.isVertical() && withPortal && styles.DayPicker_portal__vertical,
           dayPickerStyle,
           !monthTitleHeight && styles.DayPicker__hidden,
-          !noBorder && styles.DayPicker__withBorder
-        )}>
+          !noBorder && styles.DayPicker__withBorder,
+        )}
+      >
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
-          {(calendarInfoPositionTop || calendarInfoPositionBefore) &&
-            calendarInfo}
+          {(calendarInfoPositionTop || calendarInfoPositionBefore)
+            && calendarInfo}
 
           <div
             {...css(
               dayPickerWrapperStyle,
-              calendarInfoIsInline &&
-                isHorizontal &&
-                styles.DayPicker_wrapper__horizontal
-            )}>
+              calendarInfoIsInline
+                && isHorizontal
+                && styles.DayPicker_wrapper__horizontal,
+            )}
+          >
             <div
               {...css(
                 styles.DayPicker_weekHeaders,
-                isHorizontal && styles.DayPicker_weekHeaders__horizontal
+                isHorizontal && styles.DayPicker_weekHeaders__horizontal,
               )}
               aria-hidden="true"
-              role="presentation">
+              role="presentation"
+            >
               {weekHeaders}
             </div>
 
             <div // eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
               {...css(styles.DayPicker_focusRegion)}
               ref={this.setContainerRef}
-              onClick={e => {
+              onClick={(e) => {
                 e.stopPropagation();
               }}
               onKeyDown={this.onKeyDown}
@@ -1292,23 +1285,25 @@ class DayPicker extends React.PureComponent {
               tabIndex={-1}
               role="application"
               aria-roledescription={phrases.roleDescription}
-              aria-label={phrases.calendarLabel}>
-              {!verticalScrollable &&
-                navPosition === NAV_POSITION_TOP &&
-                this.renderNavigation()}
+              aria-label={phrases.calendarLabel}
+            >
+              {!verticalScrollable
+                && navPosition === NAV_POSITION_TOP
+                && this.renderNavigation()}
 
               <div
                 {...css(
                   styles.DayPicker_transitionContainer,
-                  shouldAnimateHeight &&
-                    styles.DayPicker_transitionContainer__horizontal,
-                  this.isVertical() &&
-                    styles.DayPicker_transitionContainer__vertical,
-                  verticalScrollable &&
-                    styles.DayPicker_transitionContainer__verticalScrollable,
-                  transitionContainerStyle
+                  shouldAnimateHeight
+                    && styles.DayPicker_transitionContainer__horizontal,
+                  this.isVertical()
+                    && styles.DayPicker_transitionContainer__vertical,
+                  verticalScrollable
+                    && styles.DayPicker_transitionContainer__verticalScrollable,
+                  transitionContainerStyle,
                 )}
-                ref={this.setTransitionContainerRef}>
+                ref={this.setTransitionContainerRef}
+              >
                 {verticalScrollable && this.renderNavigation(PREV_NAV)}
                 <CalendarMonthGrid
                   setMonthTitleHeight={
@@ -1347,9 +1342,9 @@ class DayPicker extends React.PureComponent {
                 {verticalScrollable && this.renderNavigation(NEXT_NAV)}
               </div>
 
-              {!verticalScrollable &&
-                navPosition === NAV_POSITION_BOTTOM &&
-                this.renderNavigation()}
+              {!verticalScrollable
+                && navPosition === NAV_POSITION_BOTTOM
+                && this.renderNavigation()}
 
               {!isTouch && !hideKeyboardShortcutsPanel && (
                 <DayPickerKeyboardShortcuts
@@ -1366,8 +1361,8 @@ class DayPicker extends React.PureComponent {
             </div>
           </div>
 
-          {(calendarInfoPositionBottom || calendarInfoPositionAfter) &&
-            calendarInfo}
+          {(calendarInfoPositionBottom || calendarInfoPositionAfter)
+            && calendarInfo}
         </OutsideClickHandler>
       </div>
     );
@@ -1409,7 +1404,7 @@ export default withStyles(
 
     DayPicker__withBorder: {
       boxShadow: noflip(
-        '0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07)'
+        '0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07)',
       ),
       borderRadius: 3,
     },
@@ -1515,5 +1510,5 @@ export default withStyles(
       }),
     },
   }),
-  { pureComponent: typeof React.PureComponent !== 'undefined' }
+  { pureComponent: typeof React.PureComponent !== 'undefined' },
 )(DayPicker);

@@ -116,7 +116,7 @@ class DayPickerNavigation extends React.PureComponent {
           {...css(
             isHorizontal && styles.DayPickerNavigation_svg__horizontal,
             isVertical && styles.DayPickerNavigation_svg__vertical,
-            disablePrev && styles.DayPickerNavigation_svg__disabled
+            disablePrev && styles.DayPickerNavigation_svg__disabled,
           )}
         />
       );
@@ -134,7 +134,7 @@ class DayPickerNavigation extends React.PureComponent {
           {...css(
             isHorizontal && styles.DayPickerNavigation_svg__horizontal,
             isVertical && styles.DayPickerNavigation_svg__vertical,
-            disableNext && styles.DayPickerNavigation_svg__disabled
+            disableNext && styles.DayPickerNavigation_svg__disabled,
           )}
         />
       );
@@ -149,46 +149,47 @@ class DayPickerNavigation extends React.PureComponent {
           isHorizontal && styles.DayPickerNavigation__horizontal,
           ...(isVertical
             ? [
-                styles.DayPickerNavigation__vertical,
-                isDefaultNav && styles.DayPickerNavigation__verticalDefault,
-              ]
+              styles.DayPickerNavigation__vertical,
+              isDefaultNav && styles.DayPickerNavigation__verticalDefault,
+            ]
             : []),
           ...(isVerticalScrollable
             ? [
-                styles.DayPickerNavigation__verticalScrollable,
-                isDefaultNav &&
-                  styles.DayPickerNavigation__verticalScrollableDefault,
-                showNavPrevButton &&
-                  styles.DayPickerNavigation__verticalScrollable_prevNav,
-              ]
+              styles.DayPickerNavigation__verticalScrollable,
+              isDefaultNav
+                  && styles.DayPickerNavigation__verticalScrollableDefault,
+              showNavPrevButton
+                  && styles.DayPickerNavigation__verticalScrollable_prevNav,
+            ]
             : []),
           ...(isBottomNavPosition
             ? [
-                styles.DayPickerNavigation__bottom,
-                isDefaultNav && styles.DayPickerNavigation__bottomDefault,
-              ]
+              styles.DayPickerNavigation__bottom,
+              isDefaultNav && styles.DayPickerNavigation__bottomDefault,
+            ]
             : []),
-          hasInlineStyles && inlineStyles
-        )}>
-        {showNavPrevButton &&
-          (renderNavPrevButton ? (
+          hasInlineStyles && inlineStyles,
+        )}
+      >
+        {showNavPrevButton
+          && (renderNavPrevButton ? (
             renderNavPrevButton({
               ariaLabel: phrases.jumpToPrevMonth,
               disabled: disablePrev,
               onClick: disablePrev ? undefined : onPrevMonthClick,
               onKeyUp: disablePrev
                 ? undefined
-                : e => {
-                    const { key } = e;
-                    if (key === 'Enter' || key === ' ') {
-                      onPrevMonthClick(e);
-                    }
-                  },
+                : (e) => {
+                  const { key } = e;
+                  if (key === 'Enter' || key === ' ') {
+                    onPrevMonthClick(e);
+                  }
+                },
               onMouseUp: disablePrev
                 ? undefined
-                : e => {
-                    e.currentTarget.blur();
-                  },
+                : (e) => {
+                  e.currentTarget.blur();
+                },
             })
           ) : (
             <div // eslint-disable-line jsx-a11y/interactive-supports-focus
@@ -200,33 +201,33 @@ class DayPickerNavigation extends React.PureComponent {
                 disablePrev && styles.DayPickerNavigation_button__disabled,
                 ...(isHorizontal
                   ? [
-                      styles.DayPickerNavigation_button__horizontal,
-                      ...(isDefaultNavPrev
-                        ? [
-                            styles.DayPickerNavigation_button__horizontalDefault,
-                            isBottomNavPosition &&
-                              styles.DayPickerNavigation_bottomButton__horizontalDefault,
-                            !isRTL &&
-                              styles.DayPickerNavigation_leftButton__horizontalDefault,
-                            isRTL &&
-                              styles.DayPickerNavigation_rightButton__horizontalDefault,
-                          ]
-                        : []),
-                    ]
+                    styles.DayPickerNavigation_button__horizontal,
+                    ...(isDefaultNavPrev
+                      ? [
+                        styles.DayPickerNavigation_button__horizontalDefault,
+                        isBottomNavPosition
+                              && styles.DayPickerNavigation_bottomButton__horizontalDefault,
+                        !isRTL
+                              && styles.DayPickerNavigation_leftButton__horizontalDefault,
+                        isRTL
+                              && styles.DayPickerNavigation_rightButton__horizontalDefault,
+                      ]
+                      : []),
+                  ]
                   : []),
                 ...(isVertical
                   ? [
-                      styles.DayPickerNavigation_button__vertical,
-                      ...(isDefaultNavPrev
-                        ? [
-                            styles.DayPickerNavigation_button__verticalDefault,
-                            styles.DayPickerNavigation_prevButton__verticalDefault,
-                            isVerticalScrollable &&
-                              styles.DayPickerNavigation_prevButton__verticalScrollableDefault,
-                          ]
-                        : []),
-                    ]
-                  : [])
+                    styles.DayPickerNavigation_button__vertical,
+                    ...(isDefaultNavPrev
+                      ? [
+                        styles.DayPickerNavigation_button__verticalDefault,
+                        styles.DayPickerNavigation_prevButton__verticalDefault,
+                        isVerticalScrollable
+                              && styles.DayPickerNavigation_prevButton__verticalScrollableDefault,
+                      ]
+                      : []),
+                  ]
+                  : []),
               )}
               aria-disabled={disablePrev ? true : undefined}
               aria-label={phrases.jumpToPrevMonth}
@@ -234,43 +235,44 @@ class DayPickerNavigation extends React.PureComponent {
               onKeyUp={
                 disablePrev
                   ? undefined
-                  : e => {
-                      const { key } = e;
-                      if (key === 'Enter' || key === ' ') {
-                        onPrevMonthClick(e);
-                      }
+                  : (e) => {
+                    const { key } = e;
+                    if (key === 'Enter' || key === ' ') {
+                      onPrevMonthClick(e);
                     }
+                  }
               }
               onMouseUp={
                 disablePrev
                   ? undefined
-                  : e => {
-                      e.currentTarget.blur();
-                    }
-              }>
+                  : (e) => {
+                    e.currentTarget.blur();
+                  }
+              }
+            >
               {navPrevIcon}
             </div>
           ))}
 
-        {showNavNextButton &&
-          (renderNavNextButton ? (
+        {showNavNextButton
+          && (renderNavNextButton ? (
             renderNavNextButton({
               ariaLabel: phrases.jumpToNextMonth,
               disabled: disableNext,
               onClick: disableNext ? undefined : onNextMonthClick,
               onKeyUp: disableNext
                 ? undefined
-                : e => {
-                    const { key } = e;
-                    if (key === 'Enter' || key === ' ') {
-                      onNextMonthClick(e);
-                    }
-                  },
+                : (e) => {
+                  const { key } = e;
+                  if (key === 'Enter' || key === ' ') {
+                    onNextMonthClick(e);
+                  }
+                },
               onMouseUp: disableNext
                 ? undefined
-                : e => {
-                    e.currentTarget.blur();
-                  },
+                : (e) => {
+                  e.currentTarget.blur();
+                },
             })
           ) : (
             <div // eslint-disable-line jsx-a11y/interactive-supports-focus
@@ -282,33 +284,33 @@ class DayPickerNavigation extends React.PureComponent {
                 disableNext && styles.DayPickerNavigation_button__disabled,
                 ...(isHorizontal
                   ? [
-                      styles.DayPickerNavigation_button__horizontal,
-                      ...(isDefaultNavNext
-                        ? [
-                            styles.DayPickerNavigation_button__horizontalDefault,
-                            isBottomNavPosition &&
-                              styles.DayPickerNavigation_bottomButton__horizontalDefault,
-                            isRTL &&
-                              styles.DayPickerNavigation_leftButton__horizontalDefault,
-                            !isRTL &&
-                              styles.DayPickerNavigation_rightButton__horizontalDefault,
-                          ]
-                        : []),
-                    ]
+                    styles.DayPickerNavigation_button__horizontal,
+                    ...(isDefaultNavNext
+                      ? [
+                        styles.DayPickerNavigation_button__horizontalDefault,
+                        isBottomNavPosition
+                              && styles.DayPickerNavigation_bottomButton__horizontalDefault,
+                        isRTL
+                              && styles.DayPickerNavigation_leftButton__horizontalDefault,
+                        !isRTL
+                              && styles.DayPickerNavigation_rightButton__horizontalDefault,
+                      ]
+                      : []),
+                  ]
                   : []),
                 ...(isVertical
                   ? [
-                      styles.DayPickerNavigation_button__vertical,
-                      ...(isDefaultNavNext
-                        ? [
-                            styles.DayPickerNavigation_button__verticalDefault,
-                            styles.DayPickerNavigation_nextButton__verticalDefault,
-                            isVerticalScrollable &&
-                              styles.DayPickerNavigation_nextButton__verticalScrollableDefault,
-                          ]
-                        : []),
-                    ]
-                  : [])
+                    styles.DayPickerNavigation_button__vertical,
+                    ...(isDefaultNavNext
+                      ? [
+                        styles.DayPickerNavigation_button__verticalDefault,
+                        styles.DayPickerNavigation_nextButton__verticalDefault,
+                        isVerticalScrollable
+                              && styles.DayPickerNavigation_nextButton__verticalScrollableDefault,
+                      ]
+                      : []),
+                  ]
+                  : []),
               )}
               aria-disabled={disableNext ? true : undefined}
               aria-label={phrases.jumpToNextMonth}
@@ -316,20 +318,21 @@ class DayPickerNavigation extends React.PureComponent {
               onKeyUp={
                 disableNext
                   ? undefined
-                  : e => {
-                      const { key } = e;
-                      if (key === 'Enter' || key === ' ') {
-                        onNextMonthClick(e);
-                      }
+                  : (e) => {
+                    const { key } = e;
+                    if (key === 'Enter' || key === ' ') {
+                      onNextMonthClick(e);
                     }
+                  }
               }
               onMouseUp={
                 disableNext
                   ? undefined
-                  : e => {
-                      e.currentTarget.blur();
-                    }
-              }>
+                  : (e) => {
+                    e.currentTarget.blur();
+                  }
+              }
+            >
               {navNextIcon}
             </div>
           ))}
@@ -492,5 +495,5 @@ export default withStyles(
       fill: color.disabled,
     },
   }),
-  { pureComponent: typeof React.PureComponent !== 'undefined' }
+  { pureComponent: typeof React.PureComponent !== 'undefined' },
 )(DayPickerNavigation);

@@ -57,12 +57,12 @@ export default {
   renderMonthText: mutuallyExclusiveProps(
     PropTypes.func,
     'renderMonthText',
-    'renderMonthElement'
+    'renderMonthElement',
   ),
   renderMonthElement: mutuallyExclusiveProps(
     PropTypes.func,
     'renderMonthText',
-    'renderMonthElement'
+    'renderMonthElement',
   ),
   renderWeekHeaderElement: PropTypes.func,
   orientation: OrientationShape,
